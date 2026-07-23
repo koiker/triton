@@ -198,14 +198,14 @@ tt.func @partition_exact_boundary() {
 tt.func @partitioned_straddle() {
   // expected-remark @below {{offset = 0, size = 40000}}
   // expected-remark @below {{offset = 80000, size = 40000}}
-  %a = ttg.local_alloc : () -> !ttg.memdesc<1250x32xf16, #PARTITIONED_2P_1G_SW, #ttg.shared_memory, mutable>
+  %a = ttg.local_alloc : () -> !ttg.memdesc<625x2x32xf16, #PARTITIONED_2P_1G_SW, #ttg.shared_memory, mutable>
   // expected-remark @below {{offset = 40000, size = 40000}}
   // expected-remark @below {{offset = 131072, size = 40000}}
   // expected-remark @below {{offset = 196608, size = 40000}}
   // expected-remark @below {{offset = 262144, size = 40000}}
-  %b = ttg.local_alloc : () -> !ttg.memdesc<2500x32xf16, #PARTITIONED_4P_1G_SW, #ttg.shared_memory, mutable>
-  "use"(%a) : (!ttg.memdesc<1250x32xf16, #PARTITIONED_2P_1G_SW, #ttg.shared_memory, mutable>) -> ()
-  "use"(%b) : (!ttg.memdesc<2500x32xf16, #PARTITIONED_4P_1G_SW, #ttg.shared_memory, mutable>) -> ()
+  %b = ttg.local_alloc : () -> !ttg.memdesc<625x4x32xf16, #PARTITIONED_4P_1G_SW, #ttg.shared_memory, mutable>
+  "use"(%a) : (!ttg.memdesc<625x2x32xf16, #PARTITIONED_2P_1G_SW, #ttg.shared_memory, mutable>) -> ()
+  "use"(%b) : (!ttg.memdesc<625x4x32xf16, #PARTITIONED_4P_1G_SW, #ttg.shared_memory, mutable>) -> ()
   tt.return
 }
 
@@ -218,8 +218,8 @@ tt.func @partitioned_straddle() {
 tt.func @two_big_neighbors() {
   // expected-remark @below {{offset = 0, size = 96000}}
   // expected-remark @below {{offset = 131072, size = 96000}}
-  %a = ttg.local_alloc : () -> !ttg.memdesc<3000x32xf16, #PARTITIONED_2P_1G_SW, #ttg.shared_memory, mutable>
-  "use"(%a) : (!ttg.memdesc<3000x32xf16, #PARTITIONED_2P_1G_SW, #ttg.shared_memory, mutable>) -> ()
+  %a = ttg.local_alloc : () -> !ttg.memdesc<1500x2x32xf16, #PARTITIONED_2P_1G_SW, #ttg.shared_memory, mutable>
+  "use"(%a) : (!ttg.memdesc<1500x2x32xf16, #PARTITIONED_2P_1G_SW, #ttg.shared_memory, mutable>) -> ()
   tt.return
 }
 }
